@@ -136,7 +136,6 @@ Other screenshots and answers contain different event counts. These are snapshot
 
 This lab covers log collection and search. It does not claim completed alert rules, dashboards, incident investigations, or production deployment.
 
-## Lab evidence
+## Screenshots
 
-Screenshot publication is pending approval. The walkthrough above summarizes the completed lab evidence.
-
+See [the screenshot guide](docs/screenshots.md) for the evidence associated with each stage. VM hostnames and lab account names are retained as lab context. Credentials are excluded. The original coursework PDF, including instructor contact details and assignment instructions, is not part of this proposed upload.
