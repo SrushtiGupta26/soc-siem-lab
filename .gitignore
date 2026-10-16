@@ -1,0 +1,12 @@
+.env
+.env.*
+*.pem
+*.key
+*.p12
+*.pfx
+/private/
+/raw-logs/
+*.deb
+*.tar.gz
+.DS_Store
+Thumbs.db
