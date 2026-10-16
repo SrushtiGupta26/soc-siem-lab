@@ -41,6 +41,14 @@ sudo ./splunk start --accept-license
 
 Starting Splunk initialized the instance and prompted for an administrator account. Password entry was interactive; no password is included in this walkthrough. The command spelling above corrects a typo in the worksheet.
 
+**Installing Splunk Enterprise on Ubuntu**
+
+![Installing Splunk Enterprise on Ubuntu](docs/screenshots/page-04-image-01.png)
+
+**Initializing Splunk and creating the lab administrator account**
+
+![Initializing Splunk and creating the lab administrator account](docs/screenshots/page-05-image-01.png)
+
 ### 2. Access the Splunk web interface
 
 After startup, I opened Splunk Web on port 8000 and accessed its administration interface. The lab also included enabling startup at boot:
@@ -51,6 +59,14 @@ sudo /opt/splunk/bin/splunk enable boot-start
 
 The web interface is used to configure the instance and search data; it is separate from the receiving port used by forwarders.
 
+**Splunk startup and web interface address**
+
+![Splunk startup and web interface address](docs/screenshots/page-06-image-01.png)
+
+**Splunk Enterprise web interface**
+
+![Splunk Enterprise web interface](docs/screenshots/page-07-image-01.png)
+
 ### 3. Configure the receiving port
 
 In Splunk Web, I navigated to **Settings → Forwarding and receiving → Configure receiving**, added TCP port **9997**, and checked the listener from the terminal:
@@ -60,6 +76,14 @@ netstat -auntp | grep 9997
 ```
 
 The screenshot shows that `netstat` was initially unavailable, so I installed `net-tools` before repeating the check. The resulting output showed `splunkd` listening on port 9997.
+
+**Receiving data on TCP port 9997**
+
+![Receiving data on TCP port 9997](docs/screenshots/page-07-image-02.png)
+
+**Verifying the splunkd listener**
+
+![Verifying the splunkd listener](docs/screenshots/page-08-image-01.png)
 
 ### 4. Install and initialize Universal Forwarder
 
@@ -73,6 +97,14 @@ sudo ./splunk start --accept-license
 
 The forwarder collected local data for forwarding. Its configuration was managed through the command line rather than a Splunk Web interface.
 
+**Starting Universal Forwarder**
+
+![Starting Universal Forwarder](docs/screenshots/page-09-image-01.png)
+
+**Universal Forwarder initialization**
+
+![Universal Forwarder initialization](docs/screenshots/page-10-image-01.jpeg)
+
 ### 5. Configure the forwarding destination
 
 The lab procedure used this command format:
@@ -82,6 +114,10 @@ sudo /opt/splunkforwarder/bin/splunk add forward-server <SPLUNK_SERVER_VM_IP>:99
 ```
 
 The actual screenshot shows `127.0.0.1:9997` and an “already present” response after authentication. This means that destination was already configured. Because it is loopback, it refers to the forwarder's own VM. The report does not show a later correction to a remote server address.
+
+**Recorded forwarding destination**
+
+![Recorded forwarding destination](docs/screenshots/page-10-image-02.png)
 
 ### 6. Monitor Linux authentication logs
 
@@ -99,6 +135,10 @@ The lab procedure also included starting the forwarder and enabling boot startup
 sudo /opt/splunkforwarder/bin/splunk enable boot-start
 sudo /opt/splunkforwarder/bin/splunk start
 ```
+
+**Adding the authentication log monitor**
+
+![Adding the authentication log monitor](docs/screenshots/page-11-image-01.png)
 
 ### 7. Confirm that authentication events were searchable
 
@@ -118,11 +158,43 @@ index=* sourcetype=linux_secure
 
 The wildcard searches matching indexes accessible to the user; it does not mean every internal index is automatically included. The selected time range also determines which events appear.
 
+**Data Summary showing the source host**
+
+![Data Summary showing the source host](docs/screenshots/page-12-image-01.png)
+
+**Searching ingested authentication events**
+
+![Searching ingested authentication events](docs/screenshots/page-12-image-02.png)
+
+**Authentication log source**
+
+![Authentication log source](docs/screenshots/page-13-image-01.png)
+
+**linux_secure sourcetype**
+
+![linux_secure sourcetype](docs/screenshots/page-13-image-02.png)
+
 ### 8. Read the event metadata
 
 I examined the index, source, sourcetype, and Splunk server fields to understand where the events were stored and how they were labelled. The report records the `main` index and shows an authentication-filtered search with **24 events** for its selected time range.
 
 Other screenshots and answers contain different event counts. These are snapshots from different searches or moments, so they are not presented as one consistent total.
+
+**Event count grouped by index**
+
+![Event count grouped by index](docs/screenshots/page-14-image-01.png)
+
+**Event count grouped by Splunk server**
+
+![Event count grouped by Splunk server](docs/screenshots/page-14-image-02.png)
+
+**Filtered authentication search showing 24 events**
+
+![Filtered authentication search showing 24 events](docs/screenshots/page-15-image-01.png)
+
+**Authentication event details**
+
+![Authentication event details](docs/screenshots/page-15-image-02.png)
 
 ## Skills demonstrated
 
